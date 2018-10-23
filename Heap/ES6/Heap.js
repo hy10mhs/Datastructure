@@ -1,4 +1,4 @@
-export default class MinHeap {
+export default class Heap {
   constructor() {
     this.heapContainer = [];
   }
@@ -16,7 +16,8 @@ export default class MinHeap {
   }
 
   hasParent(childIndex) {
-    return Math.ceil((this.heapContainer.length - 1) / 2) > this.getParentIndex(childIndex) && this.getParentIndex(childIndex) >= 0;
+    const lastChildIndex = this.heapContainer.length - 1;
+    return this.getParentIndex(lastChildIndex) >= this.getParentIndex(childIndex) && this.getParentIndex(childIndex) >= 0;
   }
 
   hasLeftChild(parentIndex) {
@@ -112,6 +113,13 @@ export default class MinHeap {
   toString() {
     return this.heapContainer.toString();
   }
+
+  /**
+   * @return [Number]
+   */
+  toArray() {
+    return this.heapContainer;
+  }
     
   /**
    * @param {number} [customStartIndex]
@@ -119,9 +127,8 @@ export default class MinHeap {
   heapifyUp(customStartIndex) {
     let currentIndex = customStartIndex || this.heapContainer.length - 1;
 
-    while (this.hasParent(currentIndex) &&
-      (this.parent(currentIndex) > this.heapContainer[currentIndex])) {
-      swap(this.getParentIndex(currentIndex), currentIndex);
+    while (this.hasParent(currentIndex) && this.pairIsInCorrectOrder(this.parent(currentIndex), this.heapContainer[currentIndex])) {
+      this.swap(this.getParentIndex(currentIndex), currentIndex);
       currentIndex = this.getParentIndex(currentIndex);
     }
   }
@@ -135,17 +142,34 @@ export default class MinHeap {
     while (this.hasLeftChild(currentIndex)) {
       childIndex = this.getLeftChildIndex(currentIndex);
       if (this.hasRightChild(currentIndex)) {
-        if (this.leftChild(currentIndex) > this.rightChild(currentIndex)) {
+        if (this.pairIsInCorrectOrder(this.leftChild(currentIndex), this.rightChild(currentIndex))) {
           childIndex = this.getRightChildIndex(currentIndex);
         }
       }
 
-      if(this.heapContainer[childIndex] < this.heapContainer[currentIndex]) {
-        swap(currentIndex, childIndex);
+      if(this.pairIsInCorrectOrder(this.heapContainer[currentIndex], this.heapContainer[childIndex])) {
+        this.swap(currentIndex, childIndex);
         currentIndex = childIndex;
       } else {
         break;
       }
     }
-  } 
+  }
+
+  /**
+   * Checks if pair of heap elements is in correct order.
+   * For MinHeap the first element must be always smaller or equal.
+   * For MaxHeap the first element must be always bigger or equal.
+   *
+   * @param {*} firstElement
+   * @param {*} secondElement
+   * @return {boolean}
+   */
+  /* istanbul ignore next */
+  pairIsInCorrectOrder(firstElement, secondElement) {
+    throw new Error(`
+      You have to implement heap pair comparision method
+      for ${firstElement} and ${secondElement} values.
+    `);
+  }
 }
