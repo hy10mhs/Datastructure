@@ -14,18 +14,17 @@ export default class Heap {
   getParentIndex(childIndex) {
     return Math.floor((childIndex - 1) / 2);
   }
-
-  hasParent(childIndex) {
-    const lastChildIndex = this.heapContainer.length - 1;
-    return this.getParentIndex(lastChildIndex) >= this.getParentIndex(childIndex) && this.getParentIndex(childIndex) >= 0;
-  }
-
+  
   hasLeftChild(parentIndex) {
     return this.heapContainer.length > this.getLeftChildIndex(parentIndex);
   }
-
+  
   hasRightChild(parentIndex) {
     return this.heapContainer.length > this.getRightChildIndex(parentIndex);
+  }
+  
+  hasParent(childIndex) {
+    return this.heapContainer.length > childIndex && this.getParentIndex(childIndex) >= 0;
   }
 
   leftChild(parentIndex) {
@@ -104,7 +103,7 @@ export default class Heap {
    * @return {boolean}
    */
   isEmpty() {
-    return this.heapContainer.length > 0
+    return this.heapContainer.length === 0
   }
   
   /**
@@ -127,7 +126,7 @@ export default class Heap {
   heapifyUp(customStartIndex) {
     let currentIndex = customStartIndex || this.heapContainer.length - 1;
 
-    while (this.hasParent(currentIndex) && this.pairIsInCorrectOrder(this.parent(currentIndex), this.heapContainer[currentIndex])) {
+    while (this.hasParent(currentIndex) && this.isInCorrectOrder(this.parent(currentIndex), this.heapContainer[currentIndex])) {
       this.swap(this.getParentIndex(currentIndex), currentIndex);
       currentIndex = this.getParentIndex(currentIndex);
     }
@@ -140,14 +139,13 @@ export default class Heap {
     let currentIndex = customStartIndex;
     let childIndex;
     while (this.hasLeftChild(currentIndex)) {
-      childIndex = this.getLeftChildIndex(currentIndex);
-      if (this.hasRightChild(currentIndex)) {
-        if (this.pairIsInCorrectOrder(this.leftChild(currentIndex), this.rightChild(currentIndex))) {
-          childIndex = this.getRightChildIndex(currentIndex);
-        }
+      if (this.hasRightChild(currentIndex) && this.isInCorrectOrder(this.leftChild(currentIndex), this.rightChild(currentIndex))) {
+        childIndex = this.getRightChildIndex(currentIndex);
+      } else {
+        childIndex = this.getLeftChildIndex(currentIndex);
       }
 
-      if(this.pairIsInCorrectOrder(this.heapContainer[currentIndex], this.heapContainer[childIndex])) {
+      if(this.isInCorrectOrder(this.heapContainer[currentIndex], this.heapContainer[childIndex])) {
         this.swap(currentIndex, childIndex);
         currentIndex = childIndex;
       } else {
@@ -165,8 +163,7 @@ export default class Heap {
    * @param {*} secondElement
    * @return {boolean}
    */
-  /* istanbul ignore next */
-  pairIsInCorrectOrder(firstElement, secondElement) {
+  isInCorrectOrder(firstElement, secondElement) {
     throw new Error(`
       You have to implement heap pair comparision method
       for ${firstElement} and ${secondElement} values.

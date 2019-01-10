@@ -38,20 +38,22 @@ describe('LinkedList', () => {
     })
     it('insert 0 at index -1 (fail case)', () => {
         const newNode = new LinkedListNode(0);
-        expect(list.insert(newNode, -1).toArray()).toEqual([6, 4, 2, 9, 1, 3, 5, 7]);
+        expect(() => { list.insert(newNode, -1) }).toThrow();
     })
-    it('insert 0 at index 8 (fail case)', () => {
+    it('insert 0 at index 8', () => {
         const newNode = new LinkedListNode(0);
-        expect(list.insert(newNode, 8).toArray()).toEqual([6, 4, 2, 9, 1, 3, 5, 7]);
+        expect(list.insert(newNode, 8).toArray()).toEqual([6, 4, 2, 9, 1, 3, 5, 7, 0]);
     })
     it('delete 9', () => {
-        const newNode = new LinkedListNode(9);
-        expect(list.delete(newNode).toArray()).toEqual([6, 4, 2, 1, 3, 5, 7]);
+        expect(list.delete(9).toArray()).toEqual([6, 4, 2, 1, 3, 5, 7, 0]);
     })
     it('reverse', () => {
-        expect(list.reverse().toArray()).toEqual([7, 5, 3, 1, 2, 4, 6]);
+        expect(list.reverse().toArray()).toEqual([0, 7, 5, 3, 1, 2, 4, 6]);
     })
     it('length', () => {
-        expect(list.length()).toEqual(7);
+        expect(list.length()).toEqual(8);
+    })
+    it('find 2', () => {
+        expect(list.find((nodeValue, value) => nodeValue === value, 2).value).toEqual(2);
     })
 });

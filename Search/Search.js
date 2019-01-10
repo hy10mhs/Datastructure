@@ -80,28 +80,7 @@ function iterativeBinarySearch(list, value) {
 
 console.log(
   recursiveBinarySearch([1,4,5,7,9,10], 2, 0, 5),
-  iterativeBinarySearch([1,4,5,7,9,10], 2, 0, 5),
+  iterativeBinarySearch([1,4,5,7,9,10], 2),
   recursiveBinarySearch([1,4,5,7,9,10], 7, 0, 5),
-  iterativeBinarySearch([1,4,5,7,9,10], 7, 0, 5)
+  iterativeBinarySearch([1,4,5,7,9,10], 7)
 );
-
-
-/*
- * Interpolation search
- */
-
-/*
- * AVL-tree
- */
-
-/*
- * B-tree
- */
-
-/*
- * 2-3-4 tree
- */
-
-/*
- * Red-Black tree
- */

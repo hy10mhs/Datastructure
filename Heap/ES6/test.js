@@ -6,7 +6,7 @@ const maxHeap = new MaxHeap();
 
 describe('MinHeap', () => {
     it('add 1', () => {
-        expect(minHeap.add(1).toArray()).toEqual([1]);
+      expect(minHeap.add(1).toArray()).toEqual([1]);
     })
     it('add 3', () => {
       expect(minHeap.add(3).toArray()).toEqual([1,3]);

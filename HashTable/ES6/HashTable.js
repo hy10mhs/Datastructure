@@ -1,4 +1,5 @@
 import LinkedList from '../../LinkedList/ES6/LinkedList';
+import LinkedListNode from '../../LinkedList/ES6/LinkedListNode';
 
 const DEFAULT_HASH_TABLE_SIZE = 32;
 const PRIME = 31;
@@ -25,36 +26,27 @@ export default class HashTable {
     
     return hashValue % this.buckets.length;
   }
-
+  
   /**
    * @param {string} key
    * @param {*} value
    */
   set(key, value) {
-    const hash = this.hash(key);
-    this.keys[key] = hash;
-
-    const bucket = this.buckets[hash];
-    const node = 
-    bucket.push(value);
-  }
-
-  
-  set(key, value) {
     const keyHash = this.hash(key);
     this.keys[key] = keyHash;
     const bucketLinkedList = this.buckets[keyHash];
-    const node = bucketLinkedList.find({ callback: nodeValue => nodeValue.key === key });
+    const node = bucketLinkedList.find((nodeValue, key) => nodeValue.key === key, key);
 
     if (!node) {
       // Insert new node.
-      bucketLinkedList.append({ key, value });
+      bucketLinkedList.append(new LinkedListNode({ key, value }));
     } else {
       // Update value of existing node.
       node.value.value = value;
     }
   }
 
+  
   /**
    * @param {string} key
    * @return {*}
@@ -63,7 +55,7 @@ export default class HashTable {
     const keyHash = this.hash(key);
     delete this.keys[key];
     const bucketLinkedList = this.buckets[keyHash];
-    const node = bucketLinkedList.find({ callback: nodeValue => nodeValue.key === key });
+    const node = bucketLinkedList.find((nodeValue, key) => nodeValue.key === key, key);
 
     if (node) {
       return bucketLinkedList.delete(node.value);
@@ -78,7 +70,7 @@ export default class HashTable {
    */
   get(key) {
     const bucketLinkedList = this.buckets[this.hash(key)];
-    const node = bucketLinkedList.find({ callback: nodeValue => nodeValue.key === key });
+    const node = bucketLinkedList.find((nodeValue, key) => nodeValue.key === key, key);
 
     return node ? node.value.value : undefined;
   }
