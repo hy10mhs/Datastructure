@@ -56,4 +56,10 @@ describe('LinkedList', () => {
     it('find 2', () => {
         expect(list.find((nodeValue, value) => nodeValue === value, 2).value).toEqual(2);
     })
+    it('deleteHead', () => {
+        expect(list.deleteHead().value).toEqual(0);
+    })
+    it('deleteTail', () => {
+        expect(list.deleteTail().value).toEqual(6);
+    })
 });

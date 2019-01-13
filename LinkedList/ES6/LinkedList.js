@@ -4,9 +4,9 @@ export default class LinkedList {
     this.tail = null;
   }
 
-  /*
+  /**
    *  @param {LinkedListNode}
-   *  return {LinkedList}
+   *  @return {LinkedList}
    */
   append(node) {
     if (!this.head) {
@@ -20,9 +20,9 @@ export default class LinkedList {
     return this;
   }
 
-  /*
+  /**
    *  @param {LinkedListNode}
-   *  return {LinkedList}
+   *  @return {LinkedList}
    */
   prepend(node) {
     if (!this.head) {
@@ -38,7 +38,7 @@ export default class LinkedList {
 
   /**
    * @param {Function} callback(LinkedListNode.value, value)
-   * return {LinkedListNode}
+   * @return {LinkedListNode}
    */
   find(callback, value) {
     let curNode = this.head;
@@ -50,7 +50,7 @@ export default class LinkedList {
     }
   }
 
-  /*
+  /**
    *  @param {LinkedListNode}
    *  @param {Number} index
    *  return {LinkedList}
@@ -77,9 +77,9 @@ export default class LinkedList {
     }
   }
 
-  /*
+  /**
    *  @param {value}
-   *  return {LinkedList}
+   *  @return {LinkedList}
    */
   delete(value) {
     let prevNode = null;
@@ -100,8 +100,46 @@ export default class LinkedList {
     return this;
   }
 
-  /*
-   * return {LinkedList}
+  /**
+   * @return {LinkedListNode}
+   */
+  deleteHead() {
+    if (!this.head) return null;
+
+    const deletedNode = this.head;
+
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = this.head.next;
+    }
+
+    return deletedNode;
+  }
+
+  /**
+   * @return {LinkedListNode}
+   */
+  deleteTail() {
+    if (!this.tail) return null;
+    
+    const deletedNode = this.tail;
+    let curNode = this.head;
+
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      while (curNode.next !== this.tail) curNode = curNode.next;
+      curNode.next = null;
+    }
+
+    return deletedNode;
+  }
+
+  /**
+   * @return {LinkedList}
    */
   reverse() {
     let prev = null;
@@ -122,8 +160,8 @@ export default class LinkedList {
     return this;
   }
 
-  /*
-   * return {Number}
+  /**
+   * @return {Number}
    */
   length() {
     let curNode = this.head;
@@ -136,8 +174,8 @@ export default class LinkedList {
     return length;
   }
 
-  /*
-   * return {Array}
+  /**
+   * @return {Array}
    */
   toArray() {
     let curNode = this.head;

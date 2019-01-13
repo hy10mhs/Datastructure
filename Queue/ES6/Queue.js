@@ -1,11 +1,8 @@
-import LinkedList from '../linked-list/LinkedList';
+import LinkedList from '../../LinkedList/ES6/LinkedList';
+import LinkedListNode from '../../LinkedList/ES6/LinkedListNode';
 
 export default class Queue {
   constructor() {
-    // We're going to implement Queue based on LinkedList since the two
-    // structures are quite similar. Namely, they both operate mostly on
-    // the elements at the beginning and the end. Compare enqueue/dequeue
-    // operations of Queue with append/deleteHead operations of LinkedList.
     this.linkedList = new LinkedList();
   }
 
@@ -17,29 +14,20 @@ export default class Queue {
   }
 
   /**
-   * Read the element at the front of the queue without removing it.
    * @return {*}
    */
   peek() {
-    if (!this.linkedList.head) {
-      return null;
-    }
-
-    return this.linkedList.head.value;
+    return this.linkedList.head ? this.linkedList.head.value : null;
   }
 
   /**
-   * Add a new element to the end of the queue (the tail of the linked list).
-   * This element will be processed after all elements ahead of it.
    * @param {*} value
    */
   enqueue(value) {
-    this.linkedList.append(value);
+    this.linkedList.append(new LinkedListNode(value));
   }
 
   /**
-   * Remove the element at the front of the queue (the head of the linked list).
-   * If the queue is empty, return null.
    * @return {*}
    */
   dequeue() {
@@ -48,11 +36,9 @@ export default class Queue {
   }
 
   /**
-   * @param [callback]
-   * @return {string}
+   * @return {Array}
    */
-  toString(callback) {
-    // Return string representation of the queue's linked list.
-    return this.linkedList.toString(callback);
+  toArray() {
+    return this.linkedList.toArray();
   }
 }
