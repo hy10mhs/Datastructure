@@ -142,8 +142,7 @@ export default class LinkedList {
    * @return {LinkedList}
    */
   reverse() {
-    let prev = null;
-    let mid = null;
+    let prev = null, mid = null;
     let next = this.head;
 
     while (next) {
@@ -185,5 +184,17 @@ export default class LinkedList {
       curNode = curNode.next;
     }
     return values;
+  }
+
+  reverseTraversal(curNode) {
+    if (curNode === undefined) {
+      curNode = this.head;
+    }
+
+    if (curNode) {
+      return [...this.reverseTraversal(curNode.next), curNode.value];
+    } else {
+      return [];
+    }
   }
 }
